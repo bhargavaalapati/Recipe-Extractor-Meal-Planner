@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: recipe_user
+      POSTGRES_PASSWORD: recipe_password
+      POSTGRES_DB: recipe_db
+    ports:
+      - "5433:5432"

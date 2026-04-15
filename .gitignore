@@ -1,0 +1,43 @@
+# -----------------------------
+# OS Generated Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Secrets & Environments (CRITICAL)
+# -----------------------------
+.env
+.env.*
+!.env.example
+*.pem
+
+# -----------------------------
+# Backend (Python / FastAPI)
+# -----------------------------
+backend/venv/
+backend/env/
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.pytest_cache/
+backend/alembic/versions/*
+
+# -----------------------------
+# Frontend (Node / Vite / React)
+# -----------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# -----------------------------
+# IDEs and Editors
+# -----------------------------
+.vscode/
+.idea/
+*.suo
+*.sln

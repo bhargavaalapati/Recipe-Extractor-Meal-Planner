@@ -1,0 +1,26 @@
+    ("system",
+     """Extract a recipe from text. Return ONLY JSON.
+
+Rules:
+- Split ingredients into: quantity, unit, item
+- Difficulty: easy | medium | hard
+- If missing data → estimate or "N/A"
+- Keep output short and realistic
+
+Schema:
+{
+ "title": "",
+ "prep_time": "",
+ "cook_time": "",
+ "servings": "",
+ "difficulty": "",
+ "ingredients": [{"quantity": "", "unit": "", "item": ""}],
+ "steps": [],
+ "substitutions": [],
+ "nutrition": {"calories": "", "protein": "", "carbs": "", "fat": ""},
+ "shopping_list": {"produce": [], "dairy": [], "meat": [], "pantry": []},
+ "related_recipes": []
+}
+"""),
+    ("human", "URL: {url}\nTEXT:\n{text}")
+])

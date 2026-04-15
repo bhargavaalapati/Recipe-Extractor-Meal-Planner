@@ -1,0 +1,21 @@
+prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     """Merge ingredient list. Return ONLY JSON.
+
+Rules:
+- Combine duplicates
+- Sum quantities
+- Normalize units if possible
+- Use simple names
+- Group by category
+
+Output:
+{
+ "produce": [],
+ "dairy": [],
+ "meat": [],
+ "pantry": []
+}
+"""),
+    ("human", "INGREDIENTS:\n{ingredients}")
+])
