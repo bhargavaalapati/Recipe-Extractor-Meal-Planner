@@ -29,6 +29,7 @@ export interface RecipeHistory {
   cuisine: string;
   difficulty: string;
   created_at: string;
+  full_data: RecipeResponse;
 }
 
 export const recipeApi = {

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
@@ -40,6 +40,10 @@ def extract_recipe(request: Request, request_data: dict, db: Session = Depends(g
     url = request_data.get("url")
     if not url:
         raise HTTPException(status_code=400, detail="URL is required")
+
+    # Strip URL fragments (like #wprm-recipe) so caching and scraping work perfectly
+    if "#" in url:
+        url = url.split("#")[0]
 
     # 1. Check if we already processed this URL
     existing_recipe = db.query(models.Recipe).filter(models.Recipe.url == url).first()

@@ -43,11 +43,14 @@ export default function HistoryTab() {
   const openDetails = async (url: string) => {
     setModalOpen(true);
     setFetchingDetails(true);
+
     try {
+      // Call the API! It will instantly hit the Postgres cache in main.py
       const data = await recipeApi.extractRecipe(url);
       setSelectedRecipe(data);
     } catch (error) {
       console.error("Failed to fetch recipe details", error);
+      toast.error("Failed to load recipe details.");
     } finally {
       setFetchingDetails(false);
     }
@@ -66,16 +69,20 @@ export default function HistoryTab() {
     setMealPlanModalOpen(true);
     setMealPlan(null);
     
-      try {
-        const data = await recipeApi.generateMealPlan(selectedIds);
-        setMealPlan(data.shopping_list);
-        toast.success("Meal plan generated successfully!");
-      } catch (error) {
-        console.error("Failed to generate meal plan", error);
-        toast.error("Failed to generate meal plan.");
-      } finally {
-        setGeneratingPlan(false);
+    try {
+      const data = await recipeApi.generateMealPlan(selectedIds);
+      setMealPlan(data.shopping_list);
+      toast.success("Meal plan generated successfully!");
+    } catch (error) {
+      if (error instanceof Error) {
+         toast.error(error.message);
+      } else {
+         toast.error("Failed to generate meal plan.");
       }
+      setMealPlanModalOpen(false); 
+    } finally {
+      setGeneratingPlan(false);
+    }
   };
 
   return (
@@ -188,11 +195,11 @@ export default function HistoryTab() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg border-b pb-2 mb-3">Instructions</h3>
-                    <ol className="space-y-3 list-decimal list-outside ml-4">
-                      {selectedRecipe.instructions.map((step, idx) => (
-                        <li key={idx} className="text-sm text-zinc-700">{step}</li>
-                      ))}
-                    </ol>
+                      <ol className="space-y-3 list-decimal list-outside ml-4">
+                        {selectedRecipe.instructions.map((step: string, idx: number) => (
+                          <li key={idx} className="text-sm text-zinc-700">{step}</li>
+                        ))}
+                      </ol>
                   </div>
                 </div>
               </div>

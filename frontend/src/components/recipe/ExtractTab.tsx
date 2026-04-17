@@ -36,11 +36,14 @@ export default function ExtractTab({ url, setUrl, loading, setLoading, error, se
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
-        toast.error(err.message); // This will pop the red error box!
+        toast.error(err.message);
       } else {
         setError("Something went wrong while extracting the recipe.");
         toast.error("Something went wrong.");
       }
+    } finally {
+      // THIS WAS MISSING! It tells React to stop showing the skeletons
+      setLoading(false); 
     }
   };
   
@@ -180,9 +183,9 @@ export default function ExtractTab({ url, setUrl, loading, setLoading, error, se
                 </CardHeader>
                 <CardContent>
                   <ol className="space-y-4 list-decimal list-outside ml-4">
-                    {recipe.instructions.map((step, idx) => (
+                    {recipe.instructions.map((inst, idx) => (
                       <li key={idx} className="text-zinc-700 pl-2 leading-relaxed">
-                        {step}
+                        {inst}
                       </li>
                     ))}
                   </ol>
